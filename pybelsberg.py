@@ -72,7 +72,6 @@ def always(func):
         is_patching = True
 
         solver.push()
-        print('CONTRAINTS AFTER PUSH', [constraint for proposition, constraint in soft_constraints])
         solver.add([constraint for proposition, constraint in soft_constraints])
 
         # Add extra hard constraints, eg. from obj.__setattr__
@@ -82,7 +81,6 @@ def always(func):
 
         print("ASSERT", solver)
         check = solver.check()
-        print("WE GET HERE", check)
         solution = solver.model()
         solver.pop()
 
@@ -104,7 +102,6 @@ def always(func):
 
     namespace = WrappingNamespace(solve, globalz)
     proxy = types.FunctionType(func.__code__, namespace)
-    print("CODE", func.__code__)
     with z3patches:
         is_patching = True
         constraints = proxy()

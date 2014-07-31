@@ -6,8 +6,7 @@ class Point(object):
         self.x = x
         self.y = y
     def distance(self, other):
-        return math.sqrt((self.x - other.x)**2 )
-        # return math.sqrt((self.x - other.x)**2 + (self.y - other.y)**2)
+        return math.sqrt((self.x - other.x)**2 + (self.y - other.y)**2)
     def __repr__(self):
         return "Point(%s, %s)" % (self.x, self.y)
 
@@ -25,7 +24,7 @@ _diffs()
 
 @always
 def my_favorite_constraint():
-    yield a.distance(b) == 40
+    yield a.distance(b) == 20
 print("AFTER @ALWAYS")
 
 # c = Point(0.0, 0.0)
