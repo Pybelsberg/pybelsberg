@@ -56,8 +56,7 @@ class Constraints:
                     value = value.as_long()
                 if isinstance(value, z3.RatNumRef):
                     value = float(value.as_fraction())
-                if value is None:
-                    value = orig
-                setattr(obj, attr, value)
+                if value is not None:
+                    setattr(obj, attr, value)
         finally:
             self.inprogress = False
