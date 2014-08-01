@@ -78,13 +78,18 @@ class WrappingNamespace(dict):
 
         if not hasattr(obj, '__pybelsberg__'):
             # collection of relevant `Constraints`
+            #XXX make this more granular,
+            #    ie. relevant `Constraints` for a single attribute
             obj.__pybelsberg__ = set()
 
         typ = type(obj)
         orig_setattr = typ.__setattr__
         orig_getattr = typ.__getattribute__
-        typ.__setattr__ = setattr_
-        typ.__getattribute__ = getattr_
+        try:
+            typ.__setattr__ = setattr_
+            typ.__getattribute__ = getattr_
+        except TypeError:
+            pass  # duh, can happen for modules
 
 
 WRAPPERS = {
