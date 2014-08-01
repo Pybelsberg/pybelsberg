@@ -17,12 +17,11 @@ class Constraints:
     """
     def __init__(self, func):
         self.inprogress = True
-
         self.namespace = ns = WrappingNamespace(self, func.__globals__)
 
         # wrap all cells in the closure
-        for name, cell in zip(func.__code__.co_freevars, func.__closure__ or ()):
-            ns.wrap(cell.cell_contents, name)
+        for cell in func.__closure__ or ():
+            ns.wrap(cell.cell_contents)
 
         # create a function in a new global namespace
         proxy = types.FunctionType(func.__code__,

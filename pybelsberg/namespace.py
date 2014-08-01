@@ -12,10 +12,10 @@ class WrappingNamespace(dict):
             return False
         obj = dict.__getitem__(self, key)
         if not key.startswith('__'):
-            self.wrap(obj, key)
+            self.wrap(obj)
         return obj
 
-    def wrap(self, obj, name):
+    def wrap(self, obj):
         def setattr_(this, key, value):  # idempotent
             if not key.startswith('__') and hasattr(this, '__pybelsberg__'):
                 for constraints in this.__pybelsberg__:
