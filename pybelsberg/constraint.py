@@ -2,7 +2,8 @@ import types
 import z3
 from .solver import Solver
 from .namespace import WrappingNamespace
-from .env import z3patches
+from .env import patch_builtins
+
 
 class Constraints:
     """A collection of constraints.
@@ -23,7 +24,7 @@ class Constraints:
         proxy = types.FunctionType(func.__code__,
                                    globals=ns,
                                    closure=func.__closure__)
-        with z3patches:
+        with patch_builtins():
             constraints = proxy()  # !!
             if isinstance(constraints, types.GeneratorType):
                 constraints = list(constraints)  # support yield
