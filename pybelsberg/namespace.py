@@ -19,7 +19,10 @@ class WrappingNamespace(dict):
     def __getitem__(self, key):
         if key == '__tracebackhide__':  # py.test compatibility
             return False
-        obj = dict.__getitem__(self, key)
+        try:
+            obj = dict.__getitem__(self, key)
+        except KeyError:
+            obj = self['__builtins__'][key]
         if not key.startswith('__'):
             self.wrap(obj)
         return obj
