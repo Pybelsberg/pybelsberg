@@ -2,6 +2,15 @@ import functools
 import z3
 
 class WrappingNamespace(dict):
+    """A namespace that automatically wraps all objects that are looked up on
+    it with magic substitutes for the getattr/setattr protocols.
+
+    :type constraints: pybelsberg.constraint.Constraints
+    :var patches: A mapping of all instance attributes to their wrapped
+                  counterpart and its original value, e.g.,
+                  ``{(Point(), 'x'): (z3.FreshReal(), 100)}``.
+
+    """
     def __init__(self, constraints, *args, **kwargs):
         dict.__init__(self, *args, **kwargs)
         self.constraints = constraints
@@ -16,6 +25,13 @@ class WrappingNamespace(dict):
         return obj
 
     def wrap(self, obj):
+        """Replace the attribute mechanism of `obj` with custom hooks.
+
+        This hooks up `obj.__getattribute__` (or rather its type's
+        `__getattribute__`) to return an appropriate `z3.ArithRef` and
+        `obj.__setattr__` to notify all constraint solver to run.
+
+        """
         def setattr_(this, key, value):  # idempotent
             if not key.startswith('__') and hasattr(this, '__pybelsberg__'):
                 for constraints in this.__pybelsberg__:
