@@ -26,7 +26,7 @@ class Solver:
         self.bindings = bindings
 
         self.soft_constraints = {}
-        for var, value in self.bindings.values():
+        for var, value in bindings.values():
             proposition = z3.FreshBool()
             constraint = z3.Implies(proposition, var == value)
             self.soft_constraints[proposition] = constraint
