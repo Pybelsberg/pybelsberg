@@ -8,7 +8,11 @@ from .env import patch_builtins
 class Constraints:
     """A collection of constraints.
 
-    :
+    :var namespace: Substitute for the global namespace in which the function
+                    is normally executed.
+    :var inprogress: Marker if a solver run is currently in progress and no
+                     further action should be taken.
+    :param func: The function returning or yielding the constraints.
 
     """
     def __init__(self, func):
