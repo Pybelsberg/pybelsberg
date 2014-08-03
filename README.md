@@ -46,3 +46,7 @@ Documentation
 All of the supported functionality is covered by tests in the /tests directory.
 Files beginning with "demo" represent more complex use cases.
 All tests that are marked as "xfail" represent functionality that is not supported yet.
+
+License
+-------
+Pybelsberg is open-source and licensed under the [BSD 3-Clause License](http://opensource.org/licenses/BSD-3-Clause).
